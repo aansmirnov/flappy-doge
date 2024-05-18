@@ -1,6 +1,16 @@
-import './styles/index.css';
-import './styles/reset.css';
+import { pageRenderer } from '@/utils';
+import { changeRoute } from '@/pages';
 
-document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
-  <h1>Flappy Doge!</h1>
-`;
+const menuElement = document.getElementById('navbar-menu');
+
+function main() {
+  if (!menuElement) {
+    throw new Error('Navbar not found!');
+  }
+
+  pageRenderer();
+
+  menuElement.addEventListener('click', changeRoute);
+}
+
+document.addEventListener('DOMContentLoaded', main);

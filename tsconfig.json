@@ -17,7 +17,12 @@
     "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "noFallthroughCasesInSwitch": true
+    "noFallthroughCasesInSwitch": true,
+    "paths": {
+      "@/consts": ["./src/consts"],
+      "@/pages": ["./src/pages"],
+      "@/utils": ["./src/utils"]
+    }
   },
   "include": ["src"]
 }
