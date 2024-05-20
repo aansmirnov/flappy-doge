@@ -16,15 +16,15 @@ export function pageRenderer(targetPathame?: string) {
 
   switch (pathname) {
     case GAME_ROUTE: {
-      createAndRenderElement(gamePage(), GAME_ROUTE);
+      createAndRenderElement(gamePage());
       break;
     }
     case P2P_GAME_ROUTE: {
-      createAndRenderElement(p2pGamePage(), P2P_GAME_ROUTE);
+      createAndRenderElement(p2pGamePage());
       break;
     }
     case ABOUT_ROUTE: {
-      createAndRenderElement(aboutPage(), ABOUT_ROUTE);
+      createAndRenderElement(aboutPage());
       break;
     }
     default: {
@@ -35,20 +35,16 @@ export function pageRenderer(targetPathame?: string) {
   toggleActiveStyle(pathname, true);
 }
 
-function createAndRenderElement(content: string, elementID: string) {
-  const element = document.createElement('div');
-  element.setAttribute('id', elementID);
-  element.insertAdjacentHTML('beforeend', content);
-
+function createAndRenderElement(content: string) {
   if (!mainElement) {
     throw new Error('Main element not found!');
   }
 
-  if (mainElement.childNodes.length > 0) {
+  if (mainElement.children.length > 0) {
     removeChildFromMainElement(mainElement);
   }
 
-  mainElement.appendChild(element);
+  mainElement.insertAdjacentHTML('beforeend', content);
 }
 
 function toggleActiveStyle(navID: string, isAdded: boolean) {
@@ -61,7 +57,7 @@ function toggleActiveStyle(navID: string, isAdded: boolean) {
 }
 
 function removeChildFromMainElement(mainElement: HTMLElement) {
-  const child = mainElement.childNodes[0] as HTMLElement;
+  const child = mainElement.children[0];
 
   mainElement.removeChild(child);
   toggleActiveStyle(child.id, false);

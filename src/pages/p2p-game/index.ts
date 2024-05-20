@@ -1,5 +1,7 @@
+import { P2P_GAME_ROUTE } from '@/consts';
+
 export function p2pGamePage() {
   return `
-          <div>P2P Game Page</div>
-      `;
+        <div id=${P2P_GAME_ROUTE}>P2P Game Page</div>
+    `;
 }

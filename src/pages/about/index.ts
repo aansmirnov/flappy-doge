@@ -1,5 +1,7 @@
+import { ABOUT_ROUTE } from '@/consts';
+
 export function aboutPage() {
   return `
-        <div">About Page</div>
+        <div id=${ABOUT_ROUTE}>About Page</div>
     `;
 }

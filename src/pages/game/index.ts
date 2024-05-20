@@ -1,5 +1,7 @@
+import { GAME_ROUTE } from '@/consts';
+
 export function gamePage() {
   return `
-          <div>Game Page</div>
-      `;
+        <div id=${GAME_ROUTE}>Game Page</div>
+    `;
 }
