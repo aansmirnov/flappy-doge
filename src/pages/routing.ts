@@ -14,11 +14,10 @@ export function changeRoute(e: MouseEvent) {
     }
   }
 
-  const pathname = window.location.pathname.slice(1);
-
-  if (pathname == route) {
+  if (!route || window.location.pathname === route) {
     return;
   }
 
-  pageRenderer(route);
+  const targetRoute = route.slice(1)
+  pageRenderer(targetRoute);
 }

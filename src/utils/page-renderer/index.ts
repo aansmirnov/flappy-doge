@@ -48,7 +48,7 @@ function createAndRenderElement(content: string) {
 }
 
 function toggleActiveStyle(navID: string, isAdded: boolean) {
-  const navItemElement = document.getElementById(navID);
+  const navItemElement = document.getElementById(`/${navID}`);
 
   if (navItemElement) {
     const key = isAdded ? 'add' : 'remove';
