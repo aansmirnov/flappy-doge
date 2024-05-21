@@ -2,10 +2,8 @@ import { ABOUT_ROUTE, GAME_ROUTE, P2P_GAME_ROUTE } from '@/consts';
 import { aboutPage, gamePage, p2pGamePage } from '@/pages';
 import { ACTIVE_NAV_MENU_ITEM_CLASS, CORRECT_ROUTES } from './consts';
 
-const mainElement = document.getElementById('main');
-
 export function pageRenderer(targetPathame?: string) {
-  let pathname = targetPathame ?? window.location.pathname.slice(1);
+  let pathname = targetPathame ?? window.location.pathname;
 
   if (CORRECT_ROUTES.includes(pathname)) {
     window.history.replaceState(null, '', pathname);
@@ -36,6 +34,8 @@ export function pageRenderer(targetPathame?: string) {
 }
 
 function createAndRenderElement(content: string) {
+  const mainElement = document.getElementById('main');
+
   if (!mainElement) {
     throw new Error('Main element not found!');
   }
@@ -48,7 +48,7 @@ function createAndRenderElement(content: string) {
 }
 
 function toggleActiveStyle(navID: string, isAdded: boolean) {
-  const navItemElement = document.getElementById(`/${navID}`);
+  const navItemElement = document.getElementById(navID);
 
   if (navItemElement) {
     const key = isAdded ? 'add' : 'remove';
@@ -60,5 +60,5 @@ function removeChildFromMainElement(mainElement: HTMLElement) {
   const child = mainElement.children[0];
 
   mainElement.removeChild(child);
-  toggleActiveStyle(child.id, false);
+  toggleActiveStyle(`/${child.id}`, false);
 }

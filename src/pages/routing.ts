@@ -18,6 +18,5 @@ export function changeRoute(e: MouseEvent) {
     return;
   }
 
-  const targetRoute = route.slice(1)
-  pageRenderer(targetRoute);
+  pageRenderer(route);
 }
