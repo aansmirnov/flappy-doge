@@ -7,12 +7,12 @@ import {
   P2P_GAME_PAGE_ID,
   P2P_GAME_ROUTE,
 } from '@/consts';
-import { HTML_WITHOUT_PAGE_CONTENT } from './mocks';
+import { MOCK_HTML_WITHOUT_PAGE_CONTENT } from '@/utils';
 import { pageRenderer } from '..';
 
 describe('src / utils / pageRenderer', () => {
   beforeEach(() => {
-    document.body.innerHTML = HTML_WITHOUT_PAGE_CONTENT;
+    document.body.innerHTML = MOCK_HTML_WITHOUT_PAGE_CONTENT;
   });
 
   afterEach(() => {

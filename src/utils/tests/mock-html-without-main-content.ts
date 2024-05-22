@@ -1,4 +1,4 @@
-export const HTML_WITHOUT_PAGE_CONTENT = `
+export const MOCK_HTML_WITHOUT_PAGE_CONTENT = `
 <body>
 <header class="header">
   <div class="logo">
