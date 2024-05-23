@@ -2,11 +2,11 @@ import { ABOUT_ROUTE, GAME_ROUTE, P2P_GAME_ROUTE } from '@/consts';
 import { aboutPage, gamePage, p2pGamePage } from '@/pages';
 import { ACTIVE_NAV_MENU_ITEM_CLASS, CORRECT_ROUTES } from './consts';
 
+const PROD_HOSTNAME = 'aansmirnov.github.io';
 const FLAPPY_DOGE_ROUTE = '/flappy-doge';
 
 export function pageRenderer(targetPathame?: string) {
-  const isProd =
-    window.location.hostname === import.meta.env.VITE_PROD_HOSTNAME;
+  const isProd = window.location.hostname === PROD_HOSTNAME;
   const windowPathname = isProd
     ? window.location.pathname.split('/')[2]
     : window.location.pathname;
@@ -18,7 +18,6 @@ export function pageRenderer(targetPathame?: string) {
     window.history.replaceState(null, '', path);
   } else {
     const path = isProd ? `${FLAPPY_DOGE_ROUTE}${GAME_ROUTE}` : GAME_ROUTE;
-    window.console.log(import.meta.env.VITE_PROD_HOSTNAME, isProd, path);
 
     window.history.replaceState(null, '', path);
     pathname = GAME_ROUTE;
