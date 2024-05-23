@@ -18,7 +18,6 @@ export function pageRenderer(targetPathame?: string) {
     window.history.replaceState(null, '', path);
   } else {
     const path = isProd ? `${FLAPPY_DOGE_ROUTE}${GAME_ROUTE}` : GAME_ROUTE;
-    window.console.log(isProd, path);
     
     window.history.replaceState(null, '', path);
     pathname = GAME_ROUTE;
