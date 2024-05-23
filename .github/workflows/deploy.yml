@@ -37,7 +37,7 @@ jobs:
       run: pnpm i
 
     - name: Run build
-      run: pnpm build && export BUILD_ENV='prod'
+      run: pnpm build
     
     - name: Setup Pages
       uses: actions/configure-pages@v5
