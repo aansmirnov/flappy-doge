@@ -2,13 +2,24 @@ import { ABOUT_ROUTE, GAME_ROUTE, P2P_GAME_ROUTE } from '@/consts';
 import { aboutPage, gamePage, p2pGamePage } from '@/pages';
 import { ACTIVE_NAV_MENU_ITEM_CLASS, CORRECT_ROUTES } from './consts';
 
+const FLAPPY_DOGE_ROUTE = '/flappy-dode';
+
 export function pageRenderer(targetPathame?: string) {
-  let pathname = targetPathame ?? window.location.pathname;
+  const isProd =
+    window.location.hostname === import.meta.env.VITE_PROD_HOSTNAME;
+  const windowPathname = isProd
+    ? window.location.pathname.split('/')[2]
+    : window.location.pathname;
+  let pathname = targetPathame ?? windowPathname;
 
   if (CORRECT_ROUTES.includes(pathname)) {
-    window.history.replaceState(null, '', pathname);
+    const path = isProd ? `${FLAPPY_DOGE_ROUTE}${pathname}` : pathname;
+
+    window.history.replaceState(null, '', path);
   } else {
-    window.history.replaceState(null, '', GAME_ROUTE);
+    const path = isProd ? `${FLAPPY_DOGE_ROUTE}${GAME_ROUTE}` : GAME_ROUTE;
+
+    window.history.replaceState(null, '', path);
     pathname = GAME_ROUTE;
   }
 
