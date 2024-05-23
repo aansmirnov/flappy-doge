@@ -7,6 +7,7 @@ export default tseslint.config(
   {
     rules: {
       '@typescript-eslint/no-unused-vars': 'error',
+      'no-undef': ['off'],
     },
   },
 );
