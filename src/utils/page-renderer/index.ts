@@ -2,7 +2,7 @@ import { ABOUT_ROUTE, GAME_ROUTE, P2P_GAME_ROUTE } from '@/consts';
 import { aboutPage, gamePage, p2pGamePage } from '@/pages';
 import { ACTIVE_NAV_MENU_ITEM_CLASS, CORRECT_ROUTES } from './consts';
 
-const FLAPPY_DOGE_ROUTE = '/flappy-dode';
+const FLAPPY_DOGE_ROUTE = '/flappy-doge';
 
 export function pageRenderer(targetPathame?: string) {
   const isProd =
@@ -18,7 +18,8 @@ export function pageRenderer(targetPathame?: string) {
     window.history.replaceState(null, '', path);
   } else {
     const path = isProd ? `${FLAPPY_DOGE_ROUTE}${GAME_ROUTE}` : GAME_ROUTE;
-
+    console.log(isProd, path);
+    
     window.history.replaceState(null, '', path);
     pathname = GAME_ROUTE;
   }
