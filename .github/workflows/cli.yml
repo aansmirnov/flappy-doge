@@ -1,0 +1,27 @@
+name: CLI
+
+on:
+  push:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - uses: actions/setup-node@v4
+    - uses: pnpm/action-setup@v2
+      with:
+        version: 8
+        run_install: false
+
+    - name: Install dependencies
+      run: pnpm i
+
+    - name: Run build
+      run: pnpm build
+
+    - name: Run test
+      run: pnpm test
+
+    - name: Run eslint
+      run: pnpm lint
