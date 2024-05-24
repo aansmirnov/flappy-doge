@@ -14,7 +14,7 @@ export function pageRenderer(targetPathame?: string) {
   const windowPathname = isProd
     ? prodHref[prodHref.length - 1]
     : window.location.pathname;
-  let pathname = targetPathame ?? windowPathname;
+  let pathname = targetPathame ?? `/${windowPathname}`;
 
   if (CORRECT_ROUTES.includes(pathname)) {
     const path = isProd ? `${FLAPPY_DOGE_ROUTE}/#${pathname}` : pathname;
