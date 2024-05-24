@@ -1,9 +1,12 @@
-import { ABOUT_ROUTE, GAME_ROUTE, P2P_GAME_ROUTE } from '@/consts';
+import {
+  ABOUT_ROUTE,
+  FLAPPY_DOGE_ROUTE,
+  GAME_ROUTE,
+  P2P_GAME_ROUTE,
+  PROD_HOSTNAME,
+} from '@/consts';
 import { aboutPage, gamePage, p2pGamePage } from '@/pages';
 import { ACTIVE_NAV_MENU_ITEM_CLASS, CORRECT_ROUTES } from './consts';
-
-const PROD_HOSTNAME = 'aansmirnov.github.io';
-const FLAPPY_DOGE_ROUTE = '/flappy-doge';
 
 export function pageRenderer(targetPathame?: string) {
   const isProd = window.location.hostname === PROD_HOSTNAME;
@@ -13,11 +16,11 @@ export function pageRenderer(targetPathame?: string) {
   let pathname = targetPathame ?? windowPathname;
 
   if (CORRECT_ROUTES.includes(pathname)) {
-    const path = isProd ? `${FLAPPY_DOGE_ROUTE}${pathname}` : pathname;
+    const path = isProd ? `${FLAPPY_DOGE_ROUTE}/#${pathname}` : pathname;
 
     window.history.replaceState(null, '', path);
   } else {
-    const path = isProd ? `${FLAPPY_DOGE_ROUTE}${GAME_ROUTE}` : GAME_ROUTE;
+    const path = isProd ? `${FLAPPY_DOGE_ROUTE}/#${GAME_ROUTE}` : GAME_ROUTE;
 
     window.history.replaceState(null, '', path);
     pathname = GAME_ROUTE;
