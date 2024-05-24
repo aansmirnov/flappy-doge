@@ -14,7 +14,7 @@ export function changeRoute(e: MouseEvent) {
     }
   }
 
-  if (!route || window.location.pathname.includes(route)) {
+  if (!route || window.location.href.includes(route)) {
     return;
   }
 

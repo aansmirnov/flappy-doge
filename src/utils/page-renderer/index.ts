@@ -10,8 +10,9 @@ import { ACTIVE_NAV_MENU_ITEM_CLASS, CORRECT_ROUTES } from './consts';
 
 export function pageRenderer(targetPathame?: string) {
   const isProd = window.location.hostname === PROD_HOSTNAME;
+  const prodHref = window.location.href.split('/');
   const windowPathname = isProd
-    ? window.location.pathname.split('/')[2]
+    ? prodHref[prodHref.length - 1]
     : window.location.pathname;
   let pathname = targetPathame ?? windowPathname;
 
