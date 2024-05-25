@@ -21,7 +21,8 @@
     "paths": {
       "@/consts": ["./src/consts"],
       "@/pages": ["./src/pages"],
-      "@/utils": ["./src/utils"]
+      "@/utils": ["./src/utils"],
+      "@/game": ["./src/game"]
     }
   },
   "include": ["src"]

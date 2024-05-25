@@ -112,3 +112,10 @@ body {
   cursor: pointer;
   transition: all 0.4s ease-out;
 }
+
+/** MAIN */
+.main > div {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

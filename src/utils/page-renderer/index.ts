@@ -7,6 +7,7 @@ import {
 } from '@/consts';
 import { aboutPage, gamePage, p2pGamePage } from '@/pages';
 import { ACTIVE_NAV_MENU_ITEM_CLASS, CORRECT_ROUTES } from './consts';
+import { initGame } from '@/game';
 
 const IS_PROD = window.location.hostname === PROD_HOSTNAME;
 
@@ -42,6 +43,7 @@ function createAndRenderElementByPathname(pathname: string) {
   switch (pathname) {
     case GAME_ROUTE: {
       createAndRenderElement(gamePage());
+      initGame();
       break;
     }
     case P2P_GAME_ROUTE: {

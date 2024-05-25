@@ -16,10 +16,18 @@ export default defineConfig({
     ],
   },
   test: {
-    environment: 'happy-dom',
+    setupFiles: ['./vitest.setup.ts'],
+    environment: 'jsdom',
+    threads: false,
+    environmentOptions: {
+      jsdom: {
+        resources: 'usable',
+      },
+    },
     coverage: {
       provider: 'v8',
     },
+    'deps.inline': ['vitest-canvas-mock'],
   },
   server: {
     port: 6969,
