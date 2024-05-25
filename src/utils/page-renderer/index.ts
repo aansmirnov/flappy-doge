@@ -8,25 +8,37 @@ import {
 import { aboutPage, gamePage, p2pGamePage } from '@/pages';
 import { ACTIVE_NAV_MENU_ITEM_CLASS, CORRECT_ROUTES } from './consts';
 
+const IS_PROD = window.location.hostname === PROD_HOSTNAME;
+
 export function pageRenderer(targetPathame?: string) {
-  const isProd = window.location.hostname === PROD_HOSTNAME;
+  let pathname = getCorrectPathname(targetPathame);
+
+  const isCorrectRoute = CORRECT_ROUTES.includes(pathname);
+
+  replaceURL(pathname, isCorrectRoute);
+  pathname = isCorrectRoute ? pathname : GAME_ROUTE;
+
+  createAndRenderElementByPathname(pathname);
+  toggleActiveStyle(pathname, true);
+}
+
+function getCorrectPathname(targetPathame?: string) {
   const prodHref = window.location.href.split('/');
-  const windowPathname = isProd
+  const windowPathname = IS_PROD
     ? prodHref[prodHref.length - 1]
-    : window.location.pathname;
-  let pathname = targetPathame ?? `/${windowPathname}`;
+    : window.location.pathname.slice(1);
 
-  if (CORRECT_ROUTES.includes(pathname)) {
-    const path = isProd ? `${FLAPPY_DOGE_ROUTE}/#${pathname}` : pathname;
+  return targetPathame ?? `/${windowPathname}`;
+}
 
-    window.history.replaceState(null, '', path);
-  } else {
-    const path = isProd ? `${FLAPPY_DOGE_ROUTE}/#${GAME_ROUTE}` : GAME_ROUTE;
+function replaceURL(pathname: string, isCorrectRoute: boolean) {
+  const path = isCorrectRoute ? pathname : GAME_ROUTE;
+  const pathByEnvironment = IS_PROD ? `${FLAPPY_DOGE_ROUTE}/#${path}` : path;
 
-    window.history.replaceState(null, '', path);
-    pathname = GAME_ROUTE;
-  }
+  window.history.replaceState(null, '', pathByEnvironment);
+}
 
+function createAndRenderElementByPathname(pathname: string) {
   switch (pathname) {
     case GAME_ROUTE: {
       createAndRenderElement(gamePage());
@@ -44,8 +56,6 @@ export function pageRenderer(targetPathame?: string) {
       throw new Error('Unknown path!');
     }
   }
-
-  toggleActiveStyle(pathname, true);
 }
 
 function createAndRenderElement(content: string) {
