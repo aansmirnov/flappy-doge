@@ -63,13 +63,9 @@ function createAndRenderElementByPathname(pathname: string) {
 function createAndRenderElement(content: string) {
   const mainElement = document.getElementById('main');
 
-  if (!mainElement) {
-    throw new Error('Main element not found!');
-  }
+  if (!mainElement) throw new Error('Main element not found!');
 
-  if (mainElement.children.length > 0) {
-    removeChildFromMainElement(mainElement);
-  }
+  if (mainElement.children.length > 0) removeChildFromMainElement(mainElement);
 
   mainElement.insertAdjacentHTML('beforeend', content);
 }

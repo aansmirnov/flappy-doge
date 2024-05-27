@@ -1,7 +1,7 @@
 import { GAME_ROUTE } from '@/consts';
 import { CANVAS_HEIGHT, CANVAS_WIDTH, GRAVITY, SPACE_CODE } from './consts';
 
-export class Player {
+export class FlappyDoge {
   private context: CanvasRenderingContext2D;
 
   private player = {
@@ -21,7 +21,7 @@ export class Player {
     this.context = context;
   }
 
-  initPlayer() {
+  initGame() {
     document.addEventListener('keydown', (event) => this.movePlayer(event));
 
     this.animatePlayer();
@@ -65,9 +65,7 @@ export class Player {
   private movePlayer(event: KeyboardEvent) {
     if (this.isGameOver()) return;
 
-    if (event.code === SPACE_CODE) {
-      this.player.velocity.y -= 6;
-    }
+    if (event.code === SPACE_CODE) this.player.velocity.y -= 6;
   }
 
   private isGameOver() {

@@ -17,9 +17,7 @@ describe('src / pages / routing', () => {
   it('should click / double click on LI element works correctly', () => {
     const aboutNavElement = document.getElementById(ABOUT_ROUTE);
 
-    if (!aboutNavElement) {
-      throw new Error('Incorrect test case!');
-    }
+    if (!aboutNavElement) throw new Error('Incorrect test case!');
 
     aboutNavElement.click();
     expect(document.getElementById(ABOUT_PAGE_ID)).toBeDefined();
@@ -27,9 +25,7 @@ describe('src / pages / routing', () => {
     aboutNavElement.click();
     const mainElement = document.getElementById('main');
 
-    if (!mainElement) {
-      throw new Error('Incorrect test case!');
-    }
+    if (!mainElement) throw new Error('Incorrect test case!');
 
     expect(mainElement.children.length).toBe(1);
   });
@@ -44,9 +40,7 @@ describe('src / pages / routing', () => {
   it('should not render page content if clicked outside', () => {
     const mainElement = document.getElementById('main');
 
-    if (!mainElement) {
-      throw new Error('Incorrect test case!');
-    }
+    if (!mainElement) throw new Error('Incorrect test case!');
 
     mainElement.click();
     expect(mainElement.children.length).toBe(0);

@@ -39,9 +39,7 @@ describe('src / utils / pageRenderer', () => {
 
     const gameNavElement = document.getElementById(GAME_ROUTE);
 
-    if (!gameNavElement) {
-      throw new Error('Incorrect test case!');
-    }
+    if (!gameNavElement) throw new Error('Incorrect test case!');
 
     gameNavElement.click();
     pageRenderer(GAME_ROUTE);

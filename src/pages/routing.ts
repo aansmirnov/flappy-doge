@@ -9,14 +9,10 @@ export function changeRoute(e: MouseEvent) {
   } else {
     const parentID = element.parentElement?.id;
 
-    if (parentID) {
-      route = parentID;
-    }
+    if (parentID) route = parentID;
   }
 
-  if (!route || window.location.href.includes(route)) {
-    return;
-  }
+  if (!route || window.location.href.includes(route)) return;
 
   pageRenderer(route);
 }
