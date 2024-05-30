@@ -5,7 +5,7 @@ import {
   P2P_GAME_ROUTE,
   PROD_HOSTNAME,
 } from '@/consts';
-import { aboutPage, gamePage, p2pGamePage } from '@/pages';
+import { aboutPage, GAME_PAGE, renderScore, p2pGamePage } from '@/pages';
 import { ACTIVE_NAV_MENU_ITEM_CLASS, CORRECT_ROUTES } from './consts';
 import { initGame } from '@/game';
 
@@ -42,7 +42,8 @@ function replaceURL(pathname: string, isCorrectRoute: boolean) {
 function createAndRenderElementByPathname(pathname: string) {
   switch (pathname) {
     case GAME_ROUTE: {
-      createAndRenderElement(gamePage());
+      createAndRenderElement(GAME_PAGE);
+      renderScore();
       initGame();
       break;
     }
