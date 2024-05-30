@@ -4,7 +4,7 @@ export const GAME_PAGE = `
     <div id=${GAME_PAGE_ID} class="game">
     <canvas id="canvas"></canvas>
     <div class="block">
-        <h3 class="block__title">Flappy Dode</h3>
+        <h3 class="block__title">Flappy Doge</h3>
         <p class="block__description">
             Play flappy doge here online for free. 
             Use your spacebar to get started.
