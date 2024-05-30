@@ -6,8 +6,8 @@ export class FlappyDoge {
 
   private player = {
     position: {
-      x: CANVAS_WIDTH / 2 - 30,
-      y: CANVAS_HEIGHT / 2 - 30,
+      x: CANVAS_WIDTH / 2 - 15,
+      y: CANVAS_HEIGHT / 2 - 15,
     },
     velocity: {
       x: 0,
@@ -15,6 +15,7 @@ export class FlappyDoge {
     },
     width: 30,
     height: 30,
+    score: 0,
   };
 
   constructor(context: CanvasRenderingContext2D) {
@@ -38,6 +39,7 @@ export class FlappyDoge {
 
   private updatePlayerPosition() {
     this.drawPlayer();
+    this.drawScore();
 
     this.player.position.y += this.player.velocity.y;
 
@@ -52,6 +54,16 @@ export class FlappyDoge {
       this.player.position.y,
       this.player.width,
       this.player.height,
+    );
+  }
+
+  private drawScore() {
+    this.context.font = '64px Lato';
+    this.context.fillStyle = 'black';
+    this.context.fillText(
+      String(this.player.score),
+      CANVAS_WIDTH / 2 - 15,
+      CANVAS_HEIGHT / 5,
     );
   }
 
