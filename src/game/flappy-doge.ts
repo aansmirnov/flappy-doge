@@ -1,5 +1,9 @@
 import { GAME_ROUTE } from '@/consts';
-import { CANVAS_HEIGHT, CANVAS_WIDTH, GRAVITY, SPACE_CODE } from './consts';
+import { GRAVITY, SPACE_CODE } from './consts';
+import { getCanvasHeight, getCanvasWidth } from './utils';
+
+const CANVAS_WIDTH = getCanvasWidth();
+const CANVAS_HEIGHT = getCanvasHeight();
 
 export class FlappyDoge {
   private context: CanvasRenderingContext2D;

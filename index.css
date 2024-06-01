@@ -75,7 +75,7 @@ body {
 
 .logo__image {
   width: 36px;
-  header: 36px;
+  height: 36px;
 }
 
 .logo__text {
@@ -112,6 +112,28 @@ body {
   transition: all 0.4s ease-out;
 }
 
+@media only screen and (max-width: 500px) {
+  .header {
+    gap: 10px;
+    padding: 0 10px;
+  }
+}
+
+@media only screen and (max-width: 450px) {
+  .menu button {
+    font-size: 12px;
+  }
+  
+  .logo__text {
+    font-size: 14px;
+  }
+
+  .logo__image {
+    width: 24px;
+    height: 24px;
+  }
+}
+
 /** MAIN */
 .main {
   padding: 0 20px;
@@ -143,6 +165,19 @@ div.game {
 .block__record,
 .block__description {
   text-align: center;
+}
+
+@media only screen and (max-width: 1140px) {
+  .main .game {
+    align-items: center;
+    flex-direction: column;
+    margin-bottom: 30px;
+    margin-left: 0;
+  }
+
+  .game .block {
+    margin-left: 0;
+  }
 }
 
 /** UI */
