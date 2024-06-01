@@ -55,9 +55,6 @@ function createAndRenderElementByPathname(pathname: string) {
       createAndRenderElement(aboutPage());
       break;
     }
-    default: {
-      throw new Error('Unknown path!');
-    }
   }
 }
 
