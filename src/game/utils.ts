@@ -1,5 +1,5 @@
 function isMobile() {
-  return navigator.maxTouchPoints === 1;
+  return navigator.maxTouchPoints !== 0;
 }
 
 export function getCanvasWidth() {
