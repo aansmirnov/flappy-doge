@@ -13,4 +13,4 @@ export const GAME_PAGE = `
         <h3 class="block__record">Your record: <span id="game_score"></span></h3>
     </div>
     </div>
-`;
+`.trim();
