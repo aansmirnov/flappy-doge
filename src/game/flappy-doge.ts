@@ -29,24 +29,24 @@ export class FlappyDoge {
   initGame() {
     document.addEventListener('keydown', (event) => this.movePlayer(event));
 
-    this.animatePlayer();
+    this.update();
   }
 
-  private animatePlayer() {
+  private update() {
     if (this.isGameOver()) return;
 
-    requestAnimationFrame(() => this.animatePlayer());
+    requestAnimationFrame(() => this.update());
 
     this.context.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
+
     this.updatePlayerPosition();
+    this.drawScore();
   }
 
   private updatePlayerPosition() {
     this.drawPlayer();
-    this.drawScore();
 
     this.player.position.y += this.player.velocity.y;
-
     if (this.isPlayerHitTheBottom()) this.player.velocity.y = 0;
     else this.player.velocity.y += GRAVITY;
   }
@@ -71,13 +71,6 @@ export class FlappyDoge {
     );
   }
 
-  private isPlayerHitTheBottom() {
-    return (
-      this.player.position.y + this.player.height + this.player.velocity.y >=
-      CANVAS_HEIGHT
-    );
-  }
-
   private movePlayer(event: KeyboardEvent) {
     if (this.isGameOver()) return;
 
@@ -86,5 +79,12 @@ export class FlappyDoge {
 
   private isGameOver() {
     return !window.location.href.includes(GAME_ROUTE);
+  }
+
+  private isPlayerHitTheBottom() {
+    return (
+      this.player.position.y + this.player.height + this.player.velocity.y >=
+      CANVAS_HEIGHT
+    );
   }
 }
