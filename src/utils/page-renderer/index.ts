@@ -3,13 +3,11 @@ import {
   FLAPPY_DOGE_ROUTE,
   GAME_ROUTE,
   P2P_GAME_ROUTE,
-  PROD_HOSTNAME,
+  IS_PROD,
 } from '@/consts';
 import { aboutPage, GAME_PAGE, renderScore, p2pGamePage } from '@/pages';
 import { ACTIVE_NAV_MENU_ITEM_CLASS, CORRECT_ROUTES } from './consts';
 import { initGame } from '@/game';
-
-const IS_PROD = window.location.hostname === PROD_HOSTNAME;
 
 export function pageRenderer(targetPathame?: string) {
   let pathname = getCorrectPathname(targetPathame);
