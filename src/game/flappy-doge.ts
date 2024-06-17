@@ -138,7 +138,7 @@ export class FlappyDoge {
     const pipeY = 0;
     const pipeYPosition =
       pipeY - PIPE_HEIGHT / 4 - Math.random() * (PIPE_HEIGHT / 2);
-    const openingSpace = CANVAS_HEIGHT / 4.5;
+    const openingSpace = CANVAS_HEIGHT / 4;
 
     this.pipes.push(
       createPipe(CANVAS_WIDTH, pipeYPosition),
