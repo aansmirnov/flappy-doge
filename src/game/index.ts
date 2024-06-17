@@ -12,7 +12,7 @@ export function initGame() {
 
   const context = canvas.getContext('2d');
 
-  if (!context) throw new Error('Context is null');
+  if (!context) throw new Error('2D context is not supported');
 
   const flappyDoge = new FlappyDoge(context);
   flappyDoge.initGame();
