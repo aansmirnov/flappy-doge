@@ -5,7 +5,12 @@ import {
   SPACE_CODE,
   VELOCITY_X,
 } from './consts';
-import { createPipe, getCanvasHeight, getCanvasWidth } from './utils';
+import {
+  createPipe,
+  getCanvasHeight,
+  getCanvasWidth,
+  updateScore,
+} from './utils';
 import type { Pipe, Player } from './types';
 import { IS_PROD, GAME_ROUTE } from '@/consts';
 
@@ -67,6 +72,8 @@ export class FlappyDoge {
     if (this.isPlayerHitTheBottom()) {
       this.isGameRunning = false;
       this.player.velocity.y = 0;
+
+      updateScore(this.player.score);
     } else {
       this.player.velocity.y += GRAVITY;
     }
@@ -92,7 +99,10 @@ export class FlappyDoge {
         pipe.passed = true;
       }
 
-      if (this.detectPipeCollision(pipe)) this.isGameRunning = false;
+      if (this.detectPipeCollision(pipe)) {
+        this.isGameRunning = false;
+        updateScore(this.player.score);
+      }
 
       while (
         this.pipes.length > 0 &&
@@ -150,7 +160,7 @@ export class FlappyDoge {
     this.context.font = '64px Lato';
     this.context.fillStyle = 'black';
     this.context.fillText(
-      String(this.player.score),
+      String(Math.round(this.player.score)),
       CANVAS_WIDTH / 2 - 15,
       CANVAS_HEIGHT / 5,
     );
