@@ -136,29 +136,26 @@ body {
 
 /** MAIN */
 .main {
-  padding: 0 20px;
-}
-
-.main > div {
   display: flex;
-  align-items: center;
   justify-content: center;
+  padding: 20px;
 }
 
 /** GAME */
-div.game {
-  align-items: flex-start;
-  margin-top: 30px;
-  margin-left: 340px; /* .game .block width */
+.game {
+  position: relative;
 }
 
 .game .block {
+  position: absolute;
+  top: 0;
+  /** Canvas width + space between items */
+  left: calc(360px + 40px);
+  
   display: flex;
   flex-direction: column;
   gap: 20px;
-  width: 300px;
-  margin-top: 40px;
-  margin-left: 40px;
+  width: 320px;
 }
 
 .block__title,
@@ -167,16 +164,10 @@ div.game {
   text-align: center;
 }
 
-@media only screen and (max-width: 1140px) {
-  .main .game {
-    align-items: center;
-    flex-direction: column;
-    margin-bottom: 30px;
-    margin-left: 0;
-  }
-
+@media only screen and (max-width: 1240px) {
   .game .block {
-    margin-left: 0;
+    position: unset;
+    margin-top: 40px;
   }
 }
 
@@ -190,4 +181,5 @@ div.game {
 /** CANVAS */
 #canvas {
   background: url('./game-background.png');
+  border-radius: 3px;
 }
