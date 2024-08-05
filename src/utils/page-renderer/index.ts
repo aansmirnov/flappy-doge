@@ -3,11 +3,11 @@ import {
   FLAPPY_DOGE_ROUTE,
   GAME_ROUTE,
   P2P_GAME_ROUTE,
-  IS_PROD,
 } from '@/consts';
 import { aboutPage, GAME_PAGE, renderScore, p2pGamePage } from '@/pages';
 import { ACTIVE_NAV_MENU_ITEM_CLASS, CORRECT_ROUTES } from './consts';
 import { initGame } from '@/game';
+import { isProd } from '@/utils';
 
 export function pageRenderer(targetPathame?: string) {
   let pathname = getCorrectPathname(targetPathame);
@@ -23,7 +23,7 @@ export function pageRenderer(targetPathame?: string) {
 
 function getCorrectPathname(targetPathame?: string) {
   const prodHref = window.location.href.split('/');
-  const windowPathname = IS_PROD
+  const windowPathname = isProd()
     ? prodHref[prodHref.length - 1]
     : window.location.pathname.slice(1);
 
@@ -32,7 +32,7 @@ function getCorrectPathname(targetPathame?: string) {
 
 function replaceURL(pathname: string, isCorrectRoute: boolean) {
   const path = isCorrectRoute ? pathname : GAME_ROUTE;
-  const pathByEnvironment = IS_PROD ? `${FLAPPY_DOGE_ROUTE}/#${path}` : path;
+  const pathByEnvironment = isProd() ? `${FLAPPY_DOGE_ROUTE}/#${path}` : path;
 
   window.history.replaceState(null, '', pathByEnvironment);
 }

@@ -3,7 +3,7 @@ function isMobile() {
 }
 
 export function getCanvasWidth() {
-  return isMobile() ? window.innerWidth - 20 : 480;
+  return isMobile() ? window.innerWidth - 20 : 360;
 }
 
 export function getCanvasHeight() {

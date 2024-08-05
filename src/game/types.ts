@@ -21,4 +21,5 @@ export type Pipe = {
   position: Position;
   size: Size;
   passed: boolean;
+  image: HTMLImageElement;
 };

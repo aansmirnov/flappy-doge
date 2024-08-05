@@ -4,7 +4,8 @@ import { createPipe } from '.';
 
 describe('createPipe', () => {
   it('should work correctly', () => {
-    const pipe = createPipe(10, 20);
+    const image = new Image();
+    const pipe = createPipe(10, 20, image);
 
     expect(pipe.passed).toBe(false);
     expect(pipe.size).toStrictEqual({ width: PIPE_WIDTH, height: PIPE_HEIGHT });

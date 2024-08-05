@@ -8,7 +8,6 @@ export function initGame() {
 
   canvas.width = getCanvasWidth();
   canvas.height = getCanvasHeight();
-  canvas.style.background = 'skyblue';
 
   const context = canvas.getContext('2d');
 

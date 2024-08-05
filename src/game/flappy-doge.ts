@@ -9,10 +9,14 @@ import {
   createPipe,
   getCanvasHeight,
   getCanvasWidth,
+  getInitialPlayerState,
   updateScore,
 } from './utils';
 import type { Pipe, Player } from './types';
-import { IS_PROD, GAME_ROUTE } from '@/consts';
+import { GAME_ROUTE } from '@/consts';
+import topPipeImage from './assets/top-pipe.png';
+import bottomPipeImage from './assets/bottom-pipe.png';
+import { isProd } from '@/utils';
 
 const CANVAS_WIDTH = getCanvasWidth();
 const CANVAS_HEIGHT = getCanvasHeight();
@@ -20,34 +24,30 @@ const CANVAS_HEIGHT = getCanvasHeight();
 export class FlappyDoge {
   private context: CanvasRenderingContext2D;
   private isGameRunning = true;
-
-  private player: Player = {
-    position: {
-      x: CANVAS_WIDTH / 2 - 15,
-      y: CANVAS_HEIGHT / 2 - 15,
-    },
-    velocity: {
-      x: 0,
-      y: 0,
-    },
-    size: {
-      width: 30,
-      height: 30,
-    },
-    score: 0,
-  };
-
+  private player: Player = getInitialPlayerState();
   private pipes: Pipe[] = [];
+  private topPipeImg: HTMLImageElement | undefined = undefined;
+  private bottomPipeImg: HTMLImageElement | undefined = undefined;
 
   constructor(context: CanvasRenderingContext2D) {
     this.context = context;
   }
 
   initGame() {
+    this.loadImages();
+
     setInterval(() => this.addPipes(), ADD_PIPE_INTERVAL);
     this.update();
 
     document.addEventListener('keydown', (event) => this.movePlayer(event));
+  }
+
+  private loadImages() {
+    this.topPipeImg = new Image();
+    this.topPipeImg.src = topPipeImage;
+
+    this.bottomPipeImg = new Image();
+    this.bottomPipeImg.src = bottomPipeImage;
   }
 
   private update() {
@@ -83,8 +83,8 @@ export class FlappyDoge {
     for (const pipe of this.pipes) {
       pipe.position.x += VELOCITY_X;
 
-      this.context.fillStyle = 'green';
-      this.context.fillRect(
+      this.context.drawImage(
+        pipe.image,
         pipe.position.x,
         pipe.position.y,
         pipe.size.width,
@@ -141,8 +141,12 @@ export class FlappyDoge {
     const openingSpace = CANVAS_HEIGHT / 4;
 
     this.pipes.push(
-      createPipe(CANVAS_WIDTH, pipeYPosition),
-      createPipe(CANVAS_WIDTH, pipeYPosition + openingSpace + PIPE_HEIGHT),
+      createPipe(CANVAS_WIDTH, pipeYPosition, this.topPipeImg),
+      createPipe(
+        CANVAS_WIDTH,
+        pipeYPosition + openingSpace + PIPE_HEIGHT,
+        this.bottomPipeImg,
+      ),
     );
   }
 
@@ -184,6 +188,6 @@ export class FlappyDoge {
   private isThePlayerOnTheGamePage() {
     const { hash, pathname } = window.location;
 
-    return IS_PROD ? hash === `#${GAME_ROUTE}` : pathname === GAME_ROUTE;
+    return isProd() ? hash === `#${GAME_ROUTE}` : pathname === GAME_ROUTE;
   }
 }

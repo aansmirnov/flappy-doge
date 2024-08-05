@@ -1,7 +1,15 @@
 import { PIPE_WIDTH, PIPE_HEIGHT } from '../../consts';
 import { Pipe } from '../../types';
 
-export function createPipe(x: number, y: number): Pipe {
+export function createPipe(
+  x: number,
+  y: number,
+  image?: HTMLImageElement,
+): Pipe {
+  if (!image) {
+    throw new Error('Cannot create a pipe');
+  }
+
   return {
     position: {
       x,
@@ -12,5 +20,6 @@ export function createPipe(x: number, y: number): Pipe {
       height: PIPE_HEIGHT,
     },
     passed: false,
+    image,
   };
 }
