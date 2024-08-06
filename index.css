@@ -180,6 +180,6 @@ body {
 
 /** CANVAS */
 #canvas {
-  background: url('./game-background.png');
+  background: url('src/game/assets/game-background.png');
   border-radius: 3px;
 }

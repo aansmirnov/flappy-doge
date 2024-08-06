@@ -37,7 +37,7 @@ jobs:
       run: pnpm i
 
     - name: Run build
-      run: pnpm build
+      run: pnpm build:prod
     
     - name: Setup Pages
       uses: actions/configure-pages@v5
