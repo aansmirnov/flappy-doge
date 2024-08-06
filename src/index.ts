@@ -1,4 +1,9 @@
-import { pageRenderer } from '@/utils';
+import {
+  getCorrectPathname,
+  renderPageContent,
+  setURL,
+  toggleNavbarStyles,
+} from '@/utils';
 import { changeRoute } from '@/pages';
 
 function main() {
@@ -6,7 +11,11 @@ function main() {
 
   if (!menuElement) throw new Error('Navbar not found!');
 
-  pageRenderer();
+  const path = getCorrectPathname();
+
+  setURL(path);
+  toggleNavbarStyles(path);
+  renderPageContent(getCorrectPathname(path));
 
   menuElement.addEventListener('click', changeRoute);
 }

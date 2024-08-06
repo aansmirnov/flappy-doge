@@ -1,4 +1,9 @@
-import { pageRenderer } from '@/utils';
+import {
+  getCorrectPathname,
+  renderPageContent,
+  setURL,
+  toggleNavbarStyles,
+} from '@/utils';
 
 export function changeRoute(e: MouseEvent) {
   const element = e.target as HTMLElement;
@@ -14,5 +19,7 @@ export function changeRoute(e: MouseEvent) {
 
   if (!route || window.location.href.includes(route)) return;
 
-  pageRenderer(route);
+  setURL(route);
+  toggleNavbarStyles(route);
+  renderPageContent(getCorrectPathname(route));
 }

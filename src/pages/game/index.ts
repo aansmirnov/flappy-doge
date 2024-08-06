@@ -1,2 +1,2 @@
 export * from './html';
-export * from './render-score';
+export * from './init-game-page';

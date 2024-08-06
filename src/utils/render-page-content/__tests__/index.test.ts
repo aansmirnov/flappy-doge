@@ -8,9 +8,9 @@ import {
   P2P_GAME_ROUTE,
 } from '@/consts';
 import { MOCK_HTML_WITHOUT_PAGE_CONTENT } from '@/utils';
-import { pageRenderer } from '..';
+import { renderPageContent } from '@/utils';
 
-describe('src / utils / pageRenderer', () => {
+describe('src / utils / renderPageContent', () => {
   beforeEach(() => {
     document.body.innerHTML = MOCK_HTML_WITHOUT_PAGE_CONTENT;
   });
@@ -20,20 +20,20 @@ describe('src / utils / pageRenderer', () => {
   });
 
   it('should render game page for unknown route', () => {
-    pageRenderer('Unknown');
+    renderPageContent('Unknown');
 
     expect(document.getElementById(GAME_PAGE_ID)).toBeDefined();
   });
 
   it('should render p2p page', () => {
-    pageRenderer(P2P_GAME_ROUTE);
+    renderPageContent(P2P_GAME_ROUTE);
 
     expect(document.getElementById(GAME_PAGE_ID)).toBe(null);
     expect(document.getElementById(P2P_GAME_PAGE_ID)).toBeDefined();
   });
 
   it('click on nav menu works correctly', () => {
-    pageRenderer(ABOUT_ROUTE);
+    renderPageContent(ABOUT_ROUTE);
 
     expect(document.getElementById(ABOUT_PAGE_ID)).toBeDefined();
 
@@ -42,7 +42,7 @@ describe('src / utils / pageRenderer', () => {
     if (!gameNavElement) throw new Error('Incorrect test case!');
 
     gameNavElement.click();
-    pageRenderer(GAME_ROUTE);
+    renderPageContent(GAME_ROUTE);
 
     expect(document.getElementById(GAME_PAGE_ID)).toBeDefined();
     expect(document.getElementById(ABOUT_PAGE_ID)).toBe(null);
@@ -51,6 +51,8 @@ describe('src / utils / pageRenderer', () => {
   it('should return an error for main element', () => {
     document.body.innerHTML = '';
 
-    expect(pageRenderer).toThrowError('Main element not found!');
+    expect(() => renderPageContent(GAME_ROUTE)).toThrowError(
+      'Main element not found!',
+    );
   });
 });
