@@ -1,4 +1,4 @@
-function isMobile() {
+export function isMobile() {
   return navigator.maxTouchPoints !== 0;
 }
 
