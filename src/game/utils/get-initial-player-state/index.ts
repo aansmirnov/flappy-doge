@@ -1,8 +1,5 @@
+import { CANVAS_WIDTH, CANVAS_HEIGHT } from '../../consts';
 import type { Player } from '../../types';
-import { getCanvasHeight, getCanvasWidth } from '../get-canvas-info';
-
-const CANVAS_WIDTH = getCanvasWidth();
-const CANVAS_HEIGHT = getCanvasHeight();
 
 export function getInitialPlayerState(): Player {
   return {
