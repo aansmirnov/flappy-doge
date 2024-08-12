@@ -13,7 +13,7 @@
         <img class="logo__image" src="/doge-icon.png" />
         <span class="logo__text">Flappy Doge</span>
       </div>
-      <ul class="menu" id="navbar-menu">
+      <ul class="menu" id="navbar">
         <li class="menu__item" id="/game">
           <button class="menu__button">Game</button>
         </li>
@@ -23,9 +23,16 @@
         <li class="menu__item" id="/about">
           <button class="menu__button">About</button>
         </li>
+        <span class="menu__close" id="close-icon">&#x2715;</span>
       </ul>
+      <span class="menu__lines" id="menu-lines">
+        <span class="menu__line"></span>
+        <span class="menu__line"></span>
+        <span class="menu__line"></span>
+      </span>
     </header>
     <main id="main" class="main"></main>
     <script type="module" src="/src/index.ts"></script>
+    <script src="/src/burger-menu.ts"></script>
   </body>
 </html>

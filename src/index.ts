@@ -1,4 +1,5 @@
 import {
+  checkIfCorrectElement,
   getCorrectPathname,
   renderPageContent,
   setURL,
@@ -7,9 +8,9 @@ import {
 import { changeRoute } from '@/pages';
 
 function main() {
-  const menuElement = document.getElementById('navbar-menu');
+  const navbarElement = document.getElementById('navbar');
 
-  if (!menuElement) throw new Error('Navbar not found!');
+  if (!navbarElement) throw new Error('Navbar not found!');
 
   const path = getCorrectPathname();
 
@@ -17,7 +18,17 @@ function main() {
   toggleNavbarStyles(path);
   renderPageContent(getCorrectPathname(path));
 
-  menuElement.addEventListener('click', changeRoute);
+  navbarElement.addEventListener('click', (event) => {
+    const element = event.target as HTMLElement;
+    const shouldChangeStyles =
+      checkIfCorrectElement(element, 'li') ||
+      checkIfCorrectElement(element, 'button');
+
+    if (window.innerWidth <= 500 && shouldChangeStyles)
+      navbarElement.classList.remove('open');
+
+    changeRoute(event);
+  });
 }
 
 document.addEventListener('DOMContentLoaded', main);

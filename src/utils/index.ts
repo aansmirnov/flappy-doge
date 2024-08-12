@@ -7,3 +7,4 @@ export * from './get-prod-pathname';
 export * from './is-valid-pathname';
 export * from './set-url';
 export * from './render-page-content';
+export * from './check-if-correct-element';

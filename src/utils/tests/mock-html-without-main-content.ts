@@ -5,7 +5,7 @@ export const MOCK_HTML_WITHOUT_PAGE_CONTENT = `
         <img class="logo__image" src="/doge-icon.png" />
         <span class="logo__text">Flappy Doge</span>
       </div>
-      <ul class="menu" id="navbar-menu">
+      <ul class="menu" id="navbar">
         <li class="menu__item" id="/game">
           <button class="menu__button">Game</button>
         </li>
