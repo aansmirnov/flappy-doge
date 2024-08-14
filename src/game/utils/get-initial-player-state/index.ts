@@ -1,19 +1,22 @@
-import { CANVAS_WIDTH, CANVAS_HEIGHT } from '../../consts';
+import { PLAYER_HEIGHT, PLAYER_WIDTH } from '../../consts';
 import type { Player } from '../../types';
+import { getCenterOfCanvas } from '../get-center-of-canvas';
 
 export function getInitialPlayerState(): Player {
+  const { dx, dy } = getCenterOfCanvas(PLAYER_WIDTH, PLAYER_HEIGHT);
+
   return {
     position: {
-      x: CANVAS_WIDTH / 2 - 15,
-      y: CANVAS_HEIGHT / 2 - 15,
+      x: dx,
+      y: dy,
     },
     velocity: {
       x: 0,
       y: 0,
     },
     size: {
-      width: 30,
-      height: 30,
+      width: PLAYER_WIDTH,
+      height: PLAYER_HEIGHT,
     },
     score: 0,
   };

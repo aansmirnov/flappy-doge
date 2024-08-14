@@ -9,6 +9,8 @@ import {
   VELOCITY_Y,
   CANVAS_WIDTH,
   CANVAS_HEIGHT,
+  REPEAT_BUTTON_WIDTH,
+  REPEAT_BUTTON_HEIGHT,
 } from './consts';
 import {
   createPipe,
@@ -18,6 +20,8 @@ import {
   didThePlayerLeaveGamePage,
   didThePlayerHitTheBottom,
   detectPipeCollision,
+  getCenterOfCanvas,
+  didClickHappen,
 } from './utils';
 import type { Pipe, Player } from './types';
 import topPipeImageUrl from './assets/top-pipe.png';
@@ -28,12 +32,13 @@ import repeatButtonImageUrl from './assets/repeat-button.png';
 export class FlappyDoge {
   private canvas: HTMLCanvasElement;
   private context: CanvasRenderingContext2D;
-  private isP2PGame = false;
 
   private isGameRunning = false;
   private didThePlayerLose = false;
+  private isP2PGame = false;
   private player: Player = getInitialPlayerState();
   private pipes: Pipe[] = [];
+  private animationFrame: number | undefined;
 
   private topPipeImage: HTMLImageElement | undefined;
   private bottomPipeImage: HTMLImageElement | undefined;
@@ -56,7 +61,7 @@ export class FlappyDoge {
   async initGame() {
     await this.loadImages();
 
-    requestAnimationFrame(() => this.updateGame());
+    this.updateGame();
     setInterval(() => this.addPipes(), ADD_PIPE_INTERVAL);
 
     document.addEventListener('keydown', (event) => this.movePlayer(event));
@@ -72,7 +77,7 @@ export class FlappyDoge {
       return;
     }
 
-    requestAnimationFrame(() => this.updateGame());
+    this.animationFrame = requestAnimationFrame(() => this.updateGame());
 
     if (!this.isGameRunning) {
       this.drawPlayButton();
@@ -94,7 +99,7 @@ export class FlappyDoge {
 
     if (!this.isGameRunning) {
       this.isGameRunning = true;
-      requestAnimationFrame(() => this.updateGame());
+      this.animationFrame = requestAnimationFrame(() => this.updateGame());
     }
 
     this.player.velocity.y -= VELOCITY_Y;
@@ -190,23 +195,31 @@ export class FlappyDoge {
 
   private drawPlayButton() {
     if (!this.startButtonImage || !this.repeatButtonImage)
-      throw new Error('Start button image not found!');
+      throw new Error('Button images image not found!');
 
     if (this.didThePlayerLose) {
-      // @ToDo: Cleanup.
+      const { dx, dy } = getCenterOfCanvas(
+        REPEAT_BUTTON_WIDTH,
+        REPEAT_BUTTON_HEIGHT,
+      );
+
       this.context.drawImage(
         this.repeatButtonImage,
-        CANVAS_WIDTH / 2 - (64 - 32),
-        CANVAS_HEIGHT / 2 - (64 - 32),
-        64,
-        64,
+        dx,
+        dy,
+        REPEAT_BUTTON_WIDTH,
+        REPEAT_BUTTON_HEIGHT,
       );
     } else {
-      // @ToDo: Cleanup.
+      const { dx, dy } = getCenterOfCanvas(
+        START_BUTTON_WIDTH,
+        START_BUTTON_HEIGHT,
+      );
+
       this.context.drawImage(
         this.startButtonImage,
-        CANVAS_WIDTH / 2 - (START_BUTTON_WIDTH - 100),
-        CANVAS_HEIGHT / 2 - (START_BUTTON_HEIGHT - 42),
+        dx,
+        dy,
         START_BUTTON_WIDTH,
         START_BUTTON_HEIGHT,
       );
@@ -214,26 +227,40 @@ export class FlappyDoge {
   }
 
   private detectImageClick(event: MouseEvent) {
+    if (this.isGameRunning) return;
+
     const { offsetX, offsetY } = event;
+    let flag = false;
 
-    if (!this.isGameRunning && !this.didThePlayerLose) {
-      // @ToDo: Cleanup.
-      if (
-        offsetX > CANVAS_WIDTH / 2 - (START_BUTTON_WIDTH - 100) &&
-        offsetX <=
-          CANVAS_WIDTH / 2 - (START_BUTTON_WIDTH - 100) + START_BUTTON_WIDTH &&
-        offsetY > CANVAS_HEIGHT / 2 - (START_BUTTON_HEIGHT - 42) &&
-        offsetY <=
-          CANVAS_HEIGHT / 2 - (START_BUTTON_HEIGHT - 42) + START_BUTTON_HEIGHT
-      ) {
-        this.isGameRunning = true;
-        requestAnimationFrame(() => this.updateGame());
+    if (this.didThePlayerLose) {
+      flag = didClickHappen(
+        offsetX,
+        offsetY,
+        REPEAT_BUTTON_WIDTH,
+        REPEAT_BUTTON_HEIGHT,
+      );
+
+      if (flag) {
+        this.didThePlayerLose = false;
+        this.pipes = [];
+        this.player = getInitialPlayerState();
+
+        if (this.animationFrame)
+          window.cancelAnimationFrame(this.animationFrame);
       }
+    } else {
+      flag = didClickHappen(
+        offsetX,
+        offsetY,
+        START_BUTTON_WIDTH,
+        START_BUTTON_HEIGHT,
+      );
     }
 
-    if (!this.isGameRunning && this.didThePlayerLose) {
-      // @ToDo: Repeat button.
-    }
+    if (!flag) return;
+
+    this.isGameRunning = true;
+    this.animationFrame = requestAnimationFrame(() => this.updateGame());
   }
 
   private async loadImages() {

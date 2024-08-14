@@ -5,3 +5,5 @@ export * from './load-image';
 export * from './did-the-player-leave-game-page';
 export * from './did-the-player-hit-the-bottom';
 export * from './detect-pipe-collision';
+export * from './get-center-of-canvas';
+export * from './did-click-happen';
