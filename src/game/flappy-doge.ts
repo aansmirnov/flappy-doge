@@ -67,6 +67,11 @@ export class FlappyDoge {
   }
 
   private updateGame() {
+    if (didThePlayerLeaveGamePage(this.isP2PGame)) {
+      this.isGameRunning = false;
+      return;
+    }
+
     requestAnimationFrame(() => this.updateGame());
 
     if (!this.isGameRunning) {
@@ -80,11 +85,6 @@ export class FlappyDoge {
     this.drawScore();
     this.drawPipes();
     this.updatePlayerPosition();
-
-    if (didThePlayerLeaveGamePage(this.isP2PGame)) {
-      this.isGameRunning = false;
-      this.didThePlayerLose = true;
-    }
   }
 
   private movePlayer(event: KeyboardEvent | MouseEvent) {
