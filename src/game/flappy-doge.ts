@@ -7,11 +7,11 @@ import {
   START_BUTTON_WIDTH,
   START_BUTTON_HEIGHT,
   VELOCITY_Y,
+  CANVAS_WIDTH,
+  CANVAS_HEIGHT,
 } from './consts';
 import {
   createPipe,
-  getCanvasHeight,
-  getCanvasWidth,
   getInitialPlayerState,
   updateScore,
   loadImage,
@@ -23,9 +23,7 @@ import type { Pipe, Player } from './types';
 import topPipeImageUrl from './assets/top-pipe.png';
 import bottomPipeImageUrl from './assets/bottom-pipe.png';
 import playButtonImageUrl from './assets/play-button.png';
-
-const CANVAS_WIDTH = getCanvasWidth();
-const CANVAS_HEIGHT = getCanvasHeight();
+import repeatButtonImageUrl from './assets/repeat-button.png';
 
 export class FlappyDoge {
   private canvas: HTMLCanvasElement;
@@ -37,9 +35,10 @@ export class FlappyDoge {
   private player: Player = getInitialPlayerState();
   private pipes: Pipe[] = [];
 
-  private topPipeImg: HTMLImageElement | undefined;
-  private bottomPipeImg: HTMLImageElement | undefined;
-  private startButtonImg: HTMLImageElement | undefined;
+  private topPipeImage: HTMLImageElement | undefined;
+  private bottomPipeImage: HTMLImageElement | undefined;
+  private startButtonImage: HTMLImageElement | undefined;
+  private repeatButtonImage: HTMLImageElement | undefined;
 
   constructor(canvas: HTMLCanvasElement, isP2PGame = false) {
     this.canvas = canvas;
@@ -57,8 +56,8 @@ export class FlappyDoge {
   async initGame() {
     await this.loadImages();
 
+    requestAnimationFrame(() => this.updateGame());
     setInterval(() => this.addPipes(), ADD_PIPE_INTERVAL);
-    this.updateGame();
 
     document.addEventListener('keydown', (event) => this.movePlayer(event));
     this.canvas.addEventListener('mousedown', (event) => {
@@ -68,18 +67,19 @@ export class FlappyDoge {
   }
 
   private updateGame() {
+    requestAnimationFrame(() => this.updateGame());
+
     if (!this.isGameRunning) {
       this.drawPlayButton();
       return;
     }
 
-    requestAnimationFrame(() => this.updateGame());
-
     this.context.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
 
+    this.drawPlayer();
     this.drawScore();
-    this.updatePlayerPosition();
     this.drawPipes();
+    this.updatePlayerPosition();
 
     if (didThePlayerLeaveGamePage(this.isP2PGame)) {
       this.isGameRunning = false;
@@ -94,15 +94,13 @@ export class FlappyDoge {
 
     if (!this.isGameRunning) {
       this.isGameRunning = true;
-      this.updateGame();
+      requestAnimationFrame(() => this.updateGame());
     }
 
     this.player.velocity.y -= VELOCITY_Y;
   }
 
   private updatePlayerPosition() {
-    this.drawPlayer();
-
     this.player.position.y += this.player.velocity.y;
 
     if (didThePlayerHitTheBottom(this.player, CANVAS_HEIGHT)) {
@@ -127,8 +125,8 @@ export class FlappyDoge {
     const bottomPipePosY = pipeYPosition + openingSpace + PIPE_HEIGHT;
 
     this.pipes.push(
-      createPipe(CANVAS_WIDTH, pipeYPosition, this.topPipeImg),
-      createPipe(CANVAS_WIDTH, bottomPipePosY, this.bottomPipeImg),
+      createPipe(CANVAS_WIDTH, pipeYPosition, this.topPipeImage),
+      createPipe(CANVAS_WIDTH, bottomPipePosY, this.bottomPipeImage),
     );
   }
 
@@ -191,13 +189,22 @@ export class FlappyDoge {
   }
 
   private drawPlayButton() {
-    if (!this.startButtonImg) throw new Error('Start button image not found!');
+    if (!this.startButtonImage || !this.repeatButtonImage)
+      throw new Error('Start button image not found!');
 
     if (this.didThePlayerLose) {
-      // @ToDo: Add repeat button.
-    } else {
+      // @ToDo: Cleanup.
       this.context.drawImage(
-        this.startButtonImg,
+        this.repeatButtonImage,
+        CANVAS_WIDTH / 2 - (64 - 32),
+        CANVAS_HEIGHT / 2 - (64 - 32),
+        64,
+        64,
+      );
+    } else {
+      // @ToDo: Cleanup.
+      this.context.drawImage(
+        this.startButtonImage,
         CANVAS_WIDTH / 2 - (START_BUTTON_WIDTH - 100),
         CANVAS_HEIGHT / 2 - (START_BUTTON_HEIGHT - 42),
         START_BUTTON_WIDTH,
@@ -220,7 +227,7 @@ export class FlappyDoge {
           CANVAS_HEIGHT / 2 - (START_BUTTON_HEIGHT - 42) + START_BUTTON_HEIGHT
       ) {
         this.isGameRunning = true;
-        this.updateGame();
+        requestAnimationFrame(() => this.updateGame());
       }
     }
 
@@ -230,16 +237,17 @@ export class FlappyDoge {
   }
 
   private async loadImages() {
-    const [topPipeImage, bottomPipeImage, startButtonImage] = await Promise.all(
-      [
+    const [startButtonImg, topPipeImg, bottomPipeImg, repeatButtonImg] =
+      await Promise.all([
+        loadImage(playButtonImageUrl),
         loadImage(topPipeImageUrl),
         loadImage(bottomPipeImageUrl),
-        loadImage(playButtonImageUrl),
-      ],
-    );
+        loadImage(repeatButtonImageUrl),
+      ]);
 
-    this.topPipeImg = topPipeImage;
-    this.bottomPipeImg = bottomPipeImage;
-    this.startButtonImg = startButtonImage;
+    this.startButtonImage = startButtonImg;
+    this.topPipeImage = topPipeImg;
+    this.bottomPipeImage = bottomPipeImg;
+    this.repeatButtonImage = repeatButtonImg;
   }
 }
