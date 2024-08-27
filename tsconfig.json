@@ -18,11 +18,9 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
+    "baseUrl": ".",
     "paths": {
-      "@/consts": ["./src/consts"],
-      "@/pages": ["./src/pages"],
-      "@/utils": ["./src/utils"],
-      "@/game": ["./src/game"]
+      "@/*": ["./src/*"]
     }
   },
   "include": ["src"]
