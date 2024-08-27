@@ -76,12 +76,12 @@ function update() {
     return;
   }
 
-  animationFrame = requestAnimationFrame(update);
-
   if (!isGameRunning) {
     drawButton();
     return;
   }
+
+  animationFrame = requestAnimationFrame(update);
 
   context.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
 
