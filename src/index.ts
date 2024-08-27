@@ -1,5 +1,4 @@
 import {
-  checkIfCorrectElement,
   getCorrectPathname,
   renderPageContent,
   setURL,
@@ -18,17 +17,7 @@ function main() {
   toggleNavbarStyles(path);
   renderPageContent(getCorrectPathname(path));
 
-  navbarElement.addEventListener('click', (event) => {
-    const element = event.target as HTMLElement;
-    const shouldChangeStyles =
-      checkIfCorrectElement(element, 'li') ||
-      checkIfCorrectElement(element, 'button');
-
-    if (window.innerWidth <= 500 && shouldChangeStyles)
-      navbarElement.classList.remove('open');
-
-    changeRoute(event);
-  });
+  navbarElement.addEventListener('click', changeRoute);
 }
 
 document.addEventListener('DOMContentLoaded', main);
