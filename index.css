@@ -235,6 +235,6 @@ body.no-scroll {
 
 /** CANVAS */
 #canvas {
-  background: url('src/game/assets/game-background.png');
+  background: url('src/game/assets/game-background.webp');
   border-radius: 3px;
 }
