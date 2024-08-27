@@ -180,7 +180,10 @@ function drawPipes() {
       pipe.passed = true;
     }
 
-    if (detectPipeCollision(player, pipe)) {
+    const isPlayerAboveTheCanvas =
+      player.position.y < 0 && pipe.position.x < player.position.x;
+
+    if (detectPipeCollision(player, pipe) || isPlayerAboveTheCanvas) {
       isGameRunning = false;
       didThePlayerLose = true;
 
