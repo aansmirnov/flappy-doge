@@ -99,8 +99,14 @@ function update() {
 }
 
 function movePlayer(event: KeyboardEvent | MouseEvent) {
+  const isKeyboardEvent = event instanceof KeyboardEvent;
+
+  if (didThePlayerLose && isKeyboardEvent && event.code === SPACE_CODE)
+    restartTheGame();
+
   if (didThePlayerLose) return;
-  if (event instanceof KeyboardEvent && event.code !== SPACE_CODE) return;
+
+  if (isKeyboardEvent && event.code !== SPACE_CODE) return;
   if (event instanceof MouseEvent && !isGameRunning) return;
 
   if (!isGameRunning) {
@@ -241,6 +247,7 @@ function detectImageClick(event: MouseEvent) {
 
   const { offsetX, offsetY } = event;
   let flag = false;
+  console.log(event);
 
   if (didThePlayerLose) {
     flag = didClickHappen(
@@ -251,15 +258,7 @@ function detectImageClick(event: MouseEvent) {
     );
 
     if (flag) {
-      didThePlayerLose = false;
-      pipes = [];
-      player = getInitialPlayerState();
-
-      if (animationFrame) window.cancelAnimationFrame(animationFrame);
-      if (pipesInterval) {
-        window.clearInterval(pipesInterval);
-        pipesInterval = setInterval(addPipes, ADD_PIPE_INTERVAL);
-      }
+      restartTheGame();
     }
   } else {
     flag = didClickHappen(
@@ -285,6 +284,18 @@ function initCanvas() {
   canvas.height = CANVAS_HEIGHT;
 
   return canvas;
+}
+
+function restartTheGame() {
+  didThePlayerLose = false;
+  pipes = [];
+  player = getInitialPlayerState();
+
+  if (animationFrame) window.cancelAnimationFrame(animationFrame);
+  if (pipesInterval) {
+    window.clearInterval(pipesInterval);
+    pipesInterval = setInterval(addPipes, ADD_PIPE_INTERVAL);
+  }
 }
 
 function doesContextExist(
