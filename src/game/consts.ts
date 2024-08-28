@@ -1,5 +1,5 @@
-export const PLAYER_WIDTH = 30;
-export const PLAYER_HEIGHT = 30;
+export const PLAYER_WIDTH = 64;
+export const PLAYER_HEIGHT = 64;
 export const CANVAS_WIDTH = 360;
 export const CANVAS_HEIGHT = 640;
 export const PIPE_WIDTH = 64;

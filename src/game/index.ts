@@ -36,6 +36,7 @@ let topPipeImage: HTMLImageElement | undefined;
 let bottomPipeImage: HTMLImageElement | undefined;
 let startButtonImage: HTMLImageElement | undefined;
 let repeatButtonImage: HTMLImageElement | undefined;
+let dogeImage: HTMLImageElement | undefined;
 
 let pipes: Pipe[] = [];
 let player: Player = getInitialPlayerState();
@@ -49,13 +50,19 @@ export async function initGame() {
   if (!doesContextExist(context))
     throw new Error('2D context is not supported!');
 
-  const { topPipeImg, bottomPipeImg, startButtonImg, repeatButtonImg } =
-    await loadGameImages();
+  const {
+    topPipeImg,
+    bottomPipeImg,
+    startButtonImg,
+    repeatButtonImg,
+    dogeImg,
+  } = await loadGameImages();
 
   topPipeImage = topPipeImg;
   bottomPipeImage = bottomPipeImg;
   startButtonImage = startButtonImg;
   repeatButtonImage = repeatButtonImg;
+  dogeImage = dogeImg;
 
   update();
 
@@ -135,10 +142,10 @@ function addPipes() {
 }
 
 function drawPlayer() {
-  if (!doesContextExist(context)) return;
+  if (!doesContextExist(context) || !dogeImage) return;
 
-  context.fillStyle = 'gray';
-  context.fillRect(
+  context.drawImage(
+    dogeImage,
     player.position.x,
     player.position.y,
     player.size.width,
