@@ -88,8 +88,18 @@ function update() {
   }
 
   if (!isGameRunning) {
-    drawButton();
-    return;
+    if (didThePlayerLose) {
+      player.velocity.y = 0;
+      player.position.y += 5;
+    }
+
+    if (
+      player.position.y + player.size.height >= CANVAS_HEIGHT ||
+      !didThePlayerLose
+    ) {
+      drawButton();
+      return;
+    }
   }
 
   animationFrame = requestAnimationFrame(update);
@@ -183,7 +193,9 @@ function drawPipes() {
   if (!doesContextExist(context)) return;
 
   for (const pipe of pipes) {
-    pipe.position.x += VELOCITY_X;
+    pipe.position.x += isGameRunning ? VELOCITY_X : 0;
+
+    context.globalCompositeOperation = 'destination-over';
 
     context.drawImage(
       pipe.image,
@@ -220,6 +232,8 @@ function drawPipes() {
 function drawButton() {
   if (!doesContextExist(context) || !repeatButtonImage || !startButtonImage)
     return;
+
+  context.globalCompositeOperation = 'source-over';
 
   if (didThePlayerLose) {
     const { dx, dy } = getCenterOfCanvas(
