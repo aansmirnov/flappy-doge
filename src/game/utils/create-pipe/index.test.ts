@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { PIPE_HEIGHT, PIPE_WIDTH } from '../../consts';
+import { PIPE_HEIGHT, PIPE_WIDTH } from '@/game/consts';
 import { createPipe } from '.';
 
 describe('createPipe', () => {

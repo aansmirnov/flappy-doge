@@ -1,4 +1,4 @@
-import { loadImage } from '../load-image';
+import { loadImage } from '@/game/utils';
 import topPipeImageUrl from '@/game/assets/top-pipe.png';
 import bottomPipeImageUrl from '@/game/assets/bottom-pipe.png';
 import playButtonImageUrl from '@/game/assets/play-button.webp';

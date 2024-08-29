@@ -1,5 +1,5 @@
-import { PIPE_WIDTH, PIPE_HEIGHT } from '../../consts';
-import { Pipe } from '../../types';
+import { PIPE_WIDTH, PIPE_HEIGHT } from '@/game/consts';
+import { Pipe } from '@/game/types';
 
 export function createPipe(
   x: number,

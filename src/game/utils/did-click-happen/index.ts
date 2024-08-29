@@ -1,4 +1,4 @@
-import { getCenterOfCanvas } from '../get-center-of-canvas';
+import { getCenterOfCanvas } from '@/game/utils';
 
 export function didClickHappen(
   offsetX: number,

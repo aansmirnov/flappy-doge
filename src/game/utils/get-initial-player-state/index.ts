@@ -1,6 +1,6 @@
-import { PLAYER_HEIGHT, PLAYER_WIDTH } from '../../consts';
-import type { Player } from '../../types';
-import { getCenterOfCanvas } from '../get-center-of-canvas';
+import { PLAYER_HEIGHT, PLAYER_WIDTH } from '@/game/consts';
+import type { Player } from '@/game/types';
+import { getCenterOfCanvas } from '@/game/utils';
 
 export function getInitialPlayerState(): Player {
   const { dx, dy } = getCenterOfCanvas(PLAYER_WIDTH, PLAYER_HEIGHT);

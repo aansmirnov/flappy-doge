@@ -1,4 +1,4 @@
-import type { Player } from '../../types';
+import type { Player } from '@/game/types';
 
 export function didThePlayerHitTheBottom(player: Player, canvasHeight: number) {
   const {

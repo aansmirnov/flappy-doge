@@ -1,4 +1,4 @@
-import { loadImage } from '../load-image';
+import { loadImage } from '@/game/utils';
 
 import zeroImageUrl from '@/game/assets/score/0.png';
 import oneImageUrl from '@/game/assets/score/1.png';

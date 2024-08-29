@@ -1,4 +1,4 @@
-import type { Pipe, Player } from '../../types';
+import type { Pipe, Player } from '@/game/types';
 
 export function detectPipeCollision(player: Player, pipe: Pipe) {
   const {

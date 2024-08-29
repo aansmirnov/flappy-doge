@@ -1,4 +1,4 @@
-import { CANVAS_HEIGHT, CANVAS_WIDTH } from '../../consts';
+import { CANVAS_HEIGHT, CANVAS_WIDTH } from '@/game/consts';
 
 export function getCenterOfCanvas(elementWidth: number, elementHeight: number) {
   return {
