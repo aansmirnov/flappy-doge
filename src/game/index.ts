@@ -22,7 +22,9 @@ import {
   didThePlayerLeaveGamePage,
   getCenterOfCanvas,
   getInitialPlayerState,
+  getScoreImages,
   loadGameImages,
+  loadScoreImages,
   updateScore,
 } from './utils';
 
@@ -57,6 +59,8 @@ export async function initGame() {
     repeatButtonImg,
     dogeImg,
   } = await loadGameImages();
+
+  await loadScoreImages();
 
   topPipeImage = topPipeImg;
   bottomPipeImage = bottomPipeImg;
@@ -162,13 +166,17 @@ function drawPlayer() {
 function drawScore() {
   if (!doesContextExist(context)) return;
 
-  context.font = '64px Lato';
-  context.fillStyle = 'black';
-  context.fillText(
-    String(Math.round(player.score)),
-    CANVAS_WIDTH / 2 - 15,
-    CANVAS_HEIGHT / 5,
-  );
+  const score = String(Math.round(player.score));
+  const scoreImages = getScoreImages(score);
+  let space = 0;
+
+  for (const scoreImage of scoreImages) {
+    const dx = (CANVAS_WIDTH - scoreImage.width) / 2 + space;
+    const dy = 60;
+
+    context.drawImage(scoreImage, dx, dy);
+    space += scoreImage.width;
+  }
 }
 
 function drawPipes() {
@@ -247,7 +255,6 @@ function detectImageClick(event: MouseEvent) {
 
   const { offsetX, offsetY } = event;
   let flag = false;
-  console.log(event);
 
   if (didThePlayerLose) {
     flag = didClickHappen(

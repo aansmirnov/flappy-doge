@@ -8,3 +8,4 @@ export * from './detect-pipe-collision';
 export * from './get-center-of-canvas';
 export * from './did-click-happen';
 export * from './load-game-images';
+export * from './score';
