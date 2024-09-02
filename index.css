@@ -150,6 +150,6 @@ body {
 
 /** CANVAS */
 #canvas {
-  background: url('src/game/assets/game-background.webp');
+  background: url('src/game/assets/images/game-background.webp');
   border-radius: 3px;
 }

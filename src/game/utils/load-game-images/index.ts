@@ -1,18 +1,20 @@
 import { loadImage } from '@/game/utils';
-import topPipeImageUrl from '@/game/assets/top-pipe.png';
-import bottomPipeImageUrl from '@/game/assets/bottom-pipe.png';
-import playButtonImageUrl from '@/game/assets/play-button.webp';
-import repeatButtonImageUrl from '@/game/assets/repeat-button.webp';
-import dogeImageUrl from '@/game/assets/doge.webp'
+import {
+  playButtonImage,
+  topPipeImage,
+  bottomPipeImage,
+  repeatButtonImage,
+  dogeImage,
+} from '@/game/assets';
 
 export async function loadGameImages() {
   const [startButtonImg, topPipeImg, bottomPipeImg, repeatButtonImg, dogeImg] =
     await Promise.all([
-      loadImage(playButtonImageUrl),
-      loadImage(topPipeImageUrl),
-      loadImage(bottomPipeImageUrl),
-      loadImage(repeatButtonImageUrl),
-      loadImage(dogeImageUrl),
+      loadImage(playButtonImage),
+      loadImage(topPipeImage),
+      loadImage(bottomPipeImage),
+      loadImage(repeatButtonImage),
+      loadImage(dogeImage),
     ]);
 
   return {
