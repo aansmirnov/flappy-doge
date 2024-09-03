@@ -25,6 +25,8 @@ import {
   getScoreImages,
   loadGameImages,
   loadScoreImages,
+  loadSounds,
+  playSound,
   updateScore,
 } from './utils';
 
@@ -52,15 +54,19 @@ export async function initGame() {
   if (!doesContextExist(context))
     throw new Error('2D context is not supported!');
 
+  const [gameImages] = await Promise.all([
+    loadGameImages(),
+    loadScoreImages(),
+    loadSounds(),
+  ]);
+
   const {
     topPipeImg,
     bottomPipeImg,
     startButtonImg,
     repeatButtonImg,
     dogeImg,
-  } = await loadGameImages();
-
-  await loadScoreImages();
+  } = gameImages;
 
   topPipeImage = topPipeImg;
   bottomPipeImage = bottomPipeImg;
@@ -129,6 +135,7 @@ function movePlayer(event: KeyboardEvent | MouseEvent) {
   }
 
   player.velocity.y -= VELOCITY_Y;
+  playSound('wing');
 }
 
 function updatePlayerPosition() {
@@ -141,6 +148,7 @@ function updatePlayerPosition() {
     player.velocity.y = 0;
 
     updateScore(player.score);
+    playSound('hit');
   } else {
     player.velocity.y += GRAVITY;
   }
@@ -211,6 +219,8 @@ function drawPipes() {
     if (!pipe.passed && didThePlayerGoThroughThePipe) {
       player.score += 0.5;
       pipe.passed = true;
+
+      playSound('point');
     }
 
     const isPlayerAboveTheCanvas =
@@ -221,6 +231,7 @@ function drawPipes() {
       didThePlayerLose = true;
 
       updateScore(player.score);
+      playSound('hit');
     }
 
     while (pipes.length > 0 && pipes[0].position.x < -pipes[0].size.width) {
