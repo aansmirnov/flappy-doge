@@ -1,4 +1,3 @@
-import { P2P_GAME_ROUTE } from '@/consts';
 import {
   ADD_PIPE_INTERVAL,
   CANVAS_HEIGHT,
@@ -19,7 +18,6 @@ import {
   detectPipeCollision,
   didClickHappen,
   didThePlayerHitTheBottom,
-  didThePlayerLeaveGamePage,
   getCenterOfCanvas,
   getInitialPlayerState,
   getScoreImages,
@@ -29,8 +27,6 @@ import {
   playSound,
   updateScore,
 } from './utils';
-
-const IS_P2P = window.location.href.includes(P2P_GAME_ROUTE);
 
 let context: CanvasRenderingContext2D | null;
 let animationFrame: number | undefined;
@@ -46,6 +42,8 @@ let pipes: Pipe[] = [];
 let player: Player = getInitialPlayerState();
 let didThePlayerLose = false;
 let isGameRunning = false;
+let wereTheAssetsLoaded = false;
+let wasTheGameInitialized = false;
 
 export async function initGame() {
   const canvas = initCanvas();
@@ -54,6 +52,24 @@ export async function initGame() {
   if (!doesContextExist(context))
     throw new Error('2D context is not supported!');
 
+  if (!wereTheAssetsLoaded) await loadAssets();
+
+  if (wasTheGameInitialized) resetGameStates();
+
+  update();
+
+  pipesInterval = setInterval(addPipes, ADD_PIPE_INTERVAL);
+
+  document.addEventListener('keydown', movePlayer);
+  canvas.addEventListener('mousedown', (event) => {
+    detectImageClick(event);
+    movePlayer(event);
+  });
+
+  wasTheGameInitialized = true;
+}
+
+async function loadAssets() {
   const [gameImages] = await Promise.all([
     loadGameImages(),
     loadScoreImages(),
@@ -74,24 +90,11 @@ export async function initGame() {
   repeatButtonImage = repeatButtonImg;
   dogeImage = dogeImg;
 
-  update();
-
-  pipesInterval = setInterval(addPipes, ADD_PIPE_INTERVAL);
-
-  document.addEventListener('keydown', movePlayer);
-  canvas.addEventListener('mousedown', (event) => {
-    detectImageClick(event);
-    movePlayer(event);
-  });
+  wereTheAssetsLoaded = true;
 }
 
 function update() {
   if (!doesContextExist(context)) return;
-
-  if (didThePlayerLeaveGamePage(IS_P2P)) {
-    isGameRunning = false;
-    return;
-  }
 
   if (!isGameRunning) {
     if (didThePlayerLose) {
@@ -335,4 +338,14 @@ function doesContextExist(
 ): ctx is CanvasRenderingContext2D {
   if (!ctx) throw new Error('2D context is not supported!');
   return Boolean(ctx);
+}
+
+function resetGameStates() {
+  if (animationFrame) window.cancelAnimationFrame(animationFrame);
+  if (pipesInterval) window.clearInterval(pipesInterval);
+
+  pipes = [];
+  player = getInitialPlayerState();
+  didThePlayerLose = false;
+  isGameRunning = false;
 }
