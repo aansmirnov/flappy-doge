@@ -88,7 +88,6 @@ body {
   display: flex;
 }
 
-
 .menu button {
   background: none;
   border: none;
@@ -115,12 +114,12 @@ body {
 .main {
   display: flex;
   justify-content: center;
-  padding: 20px;
 }
 
 /** GAME */
 .game {
   position: relative;
+  margin-top: 20px;
 }
 
 .game .block {
@@ -141,6 +140,73 @@ body {
   text-align: center;
 }
 
+/** P2P GAME */
+.p2p {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: calc(100vh - 68px);
+}
+
+.block__wrapper,
+.wrapper__connect {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+.wrapper__title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.wrapper__connect {
+  gap: 14px;
+}
+
+.connect__form {
+  display: flex;
+  gap: 14px;
+}
+
+.connect__form .input {
+  width: 300px;
+  height: 24px;
+  border-radius: 3px;
+  border: none;
+}
+
+.connect__form .input:focus {
+  outline: none;
+}
+
+.start__button {
+  height: 24px;
+  display: none;
+}
+
+.connect__button,
+.start__button {
+  background: #15803d;
+  border: none;
+  border-radius: 3px;
+  color: #e2e8f0;
+}
+
+.connect__button:hover,
+.start__button:hover {
+  cursor: pointer;
+  background: #16a34a;
+  transition: background 0.3s ease;
+}
+
+.p2p-canvas {
+  display: none;
+  gap: 40px;
+}
+
 /** UI */
 .block {
   padding: 20px;
@@ -148,8 +214,29 @@ body {
   border-radius: 3px;
 }
 
+.loader {
+  width: 24px;
+  height: 24px;
+  border: 5px solid #fff;
+  border-bottom-color: transparent;
+  border-radius: 50%;
+  display: inline-block;
+  box-sizing: border-box;
+  animation: rotation 1s linear infinite;
+}
+
+@keyframes rotation {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
 /** CANVAS */
-#canvas {
+#canvas,
+#canvas-view {
   background: url('src/game/assets/images/game-background.webp');
   border-radius: 3px;
 }

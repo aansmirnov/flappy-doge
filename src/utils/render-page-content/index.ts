@@ -1,5 +1,11 @@
 import { ABOUT_ROUTE, GAME_ROUTE, P2P_GAME_ROUTE } from '@/consts';
-import { ABOUT_PAGE, GAME_PAGE, initGamePage, P2P_GAME_PAGE } from '@/pages';
+import {
+  ABOUT_PAGE,
+  GAME_PAGE,
+  initGamePage,
+  initP2PGamePage,
+  P2P_GAME_PAGE,
+} from '@/pages';
 
 export function renderPageContent(pathname: string) {
   switch (pathname) {
@@ -10,6 +16,7 @@ export function renderPageContent(pathname: string) {
     }
     case P2P_GAME_ROUTE: {
       addContentToMainElement(P2P_GAME_PAGE);
+      initP2PGamePage();
       break;
     }
     case ABOUT_ROUTE: {

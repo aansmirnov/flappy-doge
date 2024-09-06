@@ -10,7 +10,7 @@
     "preview": "vite preview",
     "test": "vitest run",
     "test:coverage": "vitest run --coverage",
-    "format": "prettier --write .",
+    "format": "prettier --write src/",
     "lint": "eslint src/"
   },
   "devDependencies": {
@@ -26,5 +26,8 @@
     "vite": "^5.2.0",
     "vitest": "^1.6.0",
     "vitest-canvas-mock": "^0.3.3"
+  },
+  "dependencies": {
+    "peerjs": "^1.5.4"
   }
 }
