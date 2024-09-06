@@ -1,5 +1,5 @@
+import { getElements } from '@/utils';
 import { DataConnection, Peer } from 'peerjs';
-import { getP2PGameElements } from './utils';
 
 export function initP2PGamePage() {
   createPear();
@@ -13,9 +13,11 @@ let isPeerReady = false;
 let amIReady = false;
 
 function createPear() {
+  if (peer) peer.destroy();
+
   peer = new Peer();
 
-  const { p2pKeyElement } = getP2PGameElements();
+  const [p2pKeyElement] = getElements('p2p-key');
 
   peer.on('open', (id) => {
     p2pKeyElement.innerHTML = id;
@@ -26,8 +28,11 @@ function createPear() {
 }
 
 function addEventListeners() {
-  const { startButtonElelemnt, inputElement, buttonElement } =
-    getP2PGameElements();
+  const [startButtonElelemnt, inputElement, buttonElement] = getElements([
+    'start-button',
+    'p2p-input',
+    'p2p-connect-button',
+  ]);
 
   inputElement.addEventListener('input', (event) => {
     inputValue = (event.target as HTMLInputElement).value;
@@ -36,6 +41,7 @@ function addEventListeners() {
   buttonElement.addEventListener('click', () => {
     if (!inputValue) return;
 
+    renderConnectionState('connecting..');
     connect(inputValue);
   });
 
@@ -57,9 +63,7 @@ function receive(peer: Peer) {
       if (state === 'connected') renderStatGameButton();
     });
 
-    peerConnection.on('close', () => {
-      alert('Your opponent has just left!');
-    });
+    peerConnection.on('close', closeConnection);
   });
 }
 
@@ -80,9 +84,7 @@ function connect(id: string) {
     if (state === 'connected') renderStatGameButton();
   });
 
-  peerConnection.on('close', () => {
-    alert('Your opponent has just left!');
-  });
+  peerConnection.on('close', closeConnection);
 }
 
 function receiveReadyStatus() {
@@ -90,7 +92,7 @@ function receiveReadyStatus() {
 
   if (amIReady) renderCanvases();
   else {
-    const { gameStatusElement } = getP2PGameElements();
+    const [gameStatusElement] = getElements('game-status');
 
     gameStatusElement.innerHTML = 'Your opponent is ready!';
   }
@@ -104,28 +106,33 @@ function sendReadyStatus() {
 
   if (isPeerReady) renderCanvases();
   else {
-    const { gameStatusElement } = getP2PGameElements();
+    const [gameStatusElement] = getElements('game-status');
 
-    gameStatusElement.innerHTML = 'Awaiting...';
+    gameStatusElement.innerHTML = 'Awaiting..';
   }
 }
 
+function closeConnection() {
+  alert('Your opponent has just left!');
+  window.location.reload();
+}
+
 function renderCanvases() {
-  const { canvasElements, formElement } = getP2PGameElements();
+  const [canvasElements, formElement] = getElements(['canvases', 'p2p-form']);
 
   canvasElements.style.display = 'flex';
   formElement.style.display = 'none';
 }
 
 function renderConnectionState(state: string) {
-  const { connectionStatusElement } = getP2PGameElements();
+  const [connectionStatusElement] = getElements(['connection-status']);
 
   connectionStatusElement.style.display = 'block';
   connectionStatusElement.innerHTML = `Status: ${state}`;
 }
 
 function renderStatGameButton() {
-  const { startButtonElelemnt } = getP2PGameElements();
+  const [startButtonElelemnt] = getElements(['start-button']);
 
   startButtonElelemnt.style.display = 'block';
 }
