@@ -1,8 +1,8 @@
-import { GAME_PAGE_ID } from '@/consts';
+import { GAME_CANVAS_ID, GAME_PAGE_ID } from '@/consts';
 
 export const GAME_PAGE = `
     <div id=${GAME_PAGE_ID} class="game">
-        <canvas id="canvas"></canvas>
+        <canvas id=${GAME_CANVAS_ID}></canvas>
         <div class="block">
             <h3 class="block__title">Flappy Doge</h3>
             <p class="block__description">

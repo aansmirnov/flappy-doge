@@ -171,14 +171,14 @@ body {
   gap: 14px;
 }
 
-.connect__form .input {
+.connect__input {
   width: 300px;
   height: 24px;
   border-radius: 3px;
   border: none;
 }
 
-.connect__form .input:focus {
+.connect__input:focus {
   outline: none;
 }
 
@@ -235,8 +235,8 @@ body {
 }
 
 /** CANVAS */
-#canvas,
-#canvas-view {
+#game-canvas,
+#game-view-canvas {
   background: url('src/game/assets/images/game-background.webp');
   border-radius: 3px;
 }

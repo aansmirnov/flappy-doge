@@ -1,3 +1,4 @@
+import { GAME_CANVAS_ID } from '@/consts';
 import {
   ADD_PIPE_INTERVAL,
   CANVAS_HEIGHT,
@@ -311,7 +312,9 @@ function detectImageClick(event: MouseEvent) {
 }
 
 function initCanvas() {
-  const canvas = document.getElementById('canvas') as HTMLCanvasElement | null;
+  const canvas = document.getElementById(
+    GAME_CANVAS_ID,
+  ) as HTMLCanvasElement | null;
 
   if (!canvas) throw new Error('Canvas not found!');
 

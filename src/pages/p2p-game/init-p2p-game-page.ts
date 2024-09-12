@@ -1,5 +1,15 @@
 import { getElements } from '@/utils';
 import { DataConnection, Peer } from 'peerjs';
+import {
+  P2P_CANVASES,
+  P2P_CONNECT_BUTTON_ID,
+  P2P_CONNECTION_STATUS_ID,
+  P2P_FORM_ID,
+  P2P_GAME_STATUS,
+  P2P_INPUT_ID,
+  P2P_KEY_ID,
+  P2P_START_BUTTON_ID,
+} from './consts';
 
 export function initP2PGamePage() {
   createPear();
@@ -17,7 +27,7 @@ function createPear() {
 
   peer = new Peer();
 
-  const [p2pKeyElement] = getElements('p2p-key');
+  const [p2pKeyElement] = getElements(P2P_KEY_ID);
 
   peer.on('open', (id) => {
     p2pKeyElement.innerHTML = id;
@@ -29,9 +39,9 @@ function createPear() {
 
 function addEventListeners() {
   const [startButtonElelemnt, inputElement, buttonElement] = getElements([
-    'start-button',
-    'p2p-input',
-    'p2p-connect-button',
+    P2P_START_BUTTON_ID,
+    P2P_INPUT_ID,
+    P2P_CONNECT_BUTTON_ID,
   ]);
 
   inputElement.addEventListener('input', (event) => {
@@ -92,7 +102,7 @@ function receiveReadyStatus() {
 
   if (amIReady) renderCanvases();
   else {
-    const [gameStatusElement] = getElements('game-status');
+    const [gameStatusElement] = getElements(P2P_GAME_STATUS);
 
     gameStatusElement.innerHTML = 'Your opponent is ready!';
   }
@@ -106,7 +116,7 @@ function sendReadyStatus() {
 
   if (isPeerReady) renderCanvases();
   else {
-    const [gameStatusElement] = getElements('game-status');
+    const [gameStatusElement] = getElements(P2P_GAME_STATUS);
 
     gameStatusElement.innerHTML = 'Awaiting..';
   }
@@ -118,21 +128,24 @@ function closeConnection() {
 }
 
 function renderCanvases() {
-  const [canvasElements, formElement] = getElements(['canvases', 'p2p-form']);
+  const [canvasElements, formElement] = getElements([
+    P2P_CANVASES,
+    P2P_FORM_ID,
+  ]);
 
   canvasElements.style.display = 'flex';
   formElement.style.display = 'none';
 }
 
 function renderConnectionState(state: string) {
-  const [connectionStatusElement] = getElements(['connection-status']);
+  const [connectionStatusElement] = getElements([P2P_CONNECTION_STATUS_ID]);
 
   connectionStatusElement.style.display = 'block';
   connectionStatusElement.innerHTML = `Status: ${state}`;
 }
 
 function renderStatGameButton() {
-  const [startButtonElelemnt] = getElements(['start-button']);
+  const [startButtonElelemnt] = getElements([P2P_START_BUTTON_ID]);
 
   startButtonElelemnt.style.display = 'block';
 }
