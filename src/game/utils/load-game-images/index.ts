@@ -5,7 +5,7 @@ import {
   bottomPipeImage,
   repeatButtonImage,
 } from '@/game/assets';
-import dogeImage from '/public/doge.webp';
+import dogeImage from '/doge.webp';
 
 export async function loadGameImages() {
   const [startButtonImg, topPipeImg, bottomPipeImg, repeatButtonImg, dogeImg] =
