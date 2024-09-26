@@ -1,10 +1,10 @@
 export function getElements(key: string | string[]) {
   const keys = typeof key === 'string' ? [key] : key;
 
-  return keys.map((it) => {
-    const element = document.getElementById(it);
+  return keys.map((key) => {
+    const element = document.getElementById(key);
 
-    if (!element) throw new Error('Element not found!');
+    if (!element) throw new Error(`Element "${key}" not found!`);
 
     return element;
   });
